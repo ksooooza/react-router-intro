@@ -4,7 +4,7 @@
 
 ## Learning Objectives
 
-- Use React Router's `BrowserRouter`, `Link`, `Route` and `Redirect`
+- Use React Router's `BrowserRouter`, `Link`, `Route`, `Redirect`, and `Switch`
   components to add navigation to a React application
 - Review the React component lifecycle and use component methods to integrate
   with API calls
@@ -123,10 +123,10 @@ The three main ones we're going to use today are:
 ```jsx
 <Route />
 <Link />
-<Redirect />
+<Switch />
 ```
 
-Let's go ahead and import just route and link for now, we'll cover redirect later.
+Let's go ahead and import just route and link for now, we'll cover switch later.
 
 ```js
 // src/components/App/App.js
@@ -484,13 +484,13 @@ Super cool right?
 We still have some weird display quirks, and for that, we'll use `<Switch>` to
 fix them.
 
-## Using exact (10 min / 1:50)
+## Using Switch (10 min / 1:50)
 
-exact works just like the switch/case statements in javascript. We're comparing
+Switch works just like the switch/case statements in javascript. We're comparing
 string values (in this case, routes) and executing conditions (rendering
 components) based on what matches turn out true.
 
-Since we're not using exact right now, we'll see something like this:
+Since we're not using switch right now, we'll see something like this:
 
 ![preswitch](./images/pre-switch.png)
 
@@ -499,7 +499,8 @@ Currencies component. That's silly.
 
 > Why does this happen?
 
-To handle this, specify `exact` on routes.
+There are two ways to handle this: using the Switch component, or specifying
+`exact` on routes.
 
 Let's look at our routes in `App.js` again:
 
@@ -524,7 +525,7 @@ Try putting `exact` on the `/` path route component.
 
 > Note: this is equivalent to putting `exact=true`
 
-Beautiful! this is a great solution, and can also be used if we have many different routes.
+Beautiful! this is a great solution, unless we have many different routes.
 
 If we had a list of routes like:
 
@@ -532,9 +533,47 @@ If we had a list of routes like:
 - `/currencies/new`
 - `/currencies/:id` etc
 
-we have to put `exact` on `/currencies` or else, any time we went to
+we would have to put `exact` on `/currencies` or else, any time we went to
 `/currencies/something` it would match both the root (`/currencies`) AND the
 `/currencies/something` routes and both would be rendered.
+
+We can avoid all this by just using `<Switch />`.
+
+Back in `App.js`, let's import the `<Switch />` component and then wrap all of
+our routes in it.
+
+```jsx
+import { Route, Link, Switch } from 'react-router-dom'
+
+render() {
+  return(
+    <div>
+      <nav>
+        <Link to="/">
+          <img src="https://en.bitcoin.it/w/images/en/2/29/BC_Logo_.png" alt=""/>
+          <h1>Bitcoin prices</h1>
+        </Link>
+        <Link to="/currencies">Currency List</Link>
+      </nav>
+      <main>
+        <Switch>
+          <Route path="/"
+            exact
+            component={Home}
+          />
+          <Route path="/currencies"
+            component={Currencies}
+          />
+          <Route
+            path="/price/:currency"
+            render={(routerProps) => <Price setPrice={this.setPrice} {...routerProps} {...this.state} /> }
+          />
+        </Switch>
+      </main>
+    </div>
+  )
+}
+```
 
 So easy!
 
