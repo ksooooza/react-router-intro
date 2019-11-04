@@ -31,19 +31,6 @@ URL. This way we don't have to reload the entire page to swap out some data.
 
 Let's get set up with the react bitcoin price checker!
 
-## You Do: Axios & Coindesk API (5 min / 0:15)
-
-We will be using [Axios](https://github.com/axios/axios) to query the Coindesk
-API in this exercise. Take 5 minutes to read and test out (using postman or the
-browser) the API docs below
-
-[Coindesk API](https://www.coindesk.com/api/)
-
-Also, install the
-[React developer tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
-chrome extension if you haven't already. It'll come in very handy for inspecting
-components.
-
 ## You Do: Examine Current Codebase (15 min / 0:30)
 
 Since we're starting off with a project that already has some scaffolding built
