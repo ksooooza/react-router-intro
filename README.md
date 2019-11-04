@@ -51,7 +51,7 @@ following questions:
 5. Look at the Price component. What props is it expecting to be passed?
 <!-- 6. Where is our application getting data from? How is it accomplishing this? -->
 
-## We Do: React Router Setup (10 min / 0:40)
+## We Do: React Router Setup (10 min / 0:30)
 
 Currently, we are rendering just the App component, which renders the Home
 component. Let's bring in React Router and set it up to allow us to display
@@ -182,7 +182,8 @@ Great! But this doesn't do anything because we're already on the homepage.
 
 Also, note that we used `component` in this case to display our home component.
 We're doing that because we just want to display it without any changes - we're
-not passing any props in, we're not modifying anything.
+not passing any props in, we're not modifying anything. The `component` property is only 
+used for static components.
 
 ## You do: Add a Second Route and Link (10 min / 0:50)
 
