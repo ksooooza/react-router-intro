@@ -2,16 +2,6 @@
 
 ![React Router Logo](./react-router-logo.png)
 
-## Learning Objectives
-
-- Use React Router's `BrowserRouter`, `Link`, `Route`, `Redirect`, and `Switch`
-  components to add navigation to a React application
-- Use URL parameters to navigate to specific pages in React
-- Review the React component lifecycle and use lifecycle methods to integrate
-  with API calls
-
-## Framing (5 min / 0:05)
-
 Up to this point, our React applications have been limited in size, allowing us
 to use basic control flow in our components' render methods to determine what
 gets rendered to our users. However, as our React applications grow in size and
@@ -27,11 +17,23 @@ We will configure it as the root component in a React application. Then, we'll
 tell it to render other components within itself depending on the path in the
 URL. This way we don't have to reload the entire page to swap out some data.
 
-## We Do: [React Bitcoin Prices](https://git.generalassemb.ly/dc-wdi-react-redux/react-bitcoin-prices) Setup (5 min / 0:10)
+## Learning Objectives
+
+- Use React Router's `BrowserRouter`, `Link`, `Route`, `exact` and `Redirect`
+  components to add navigation to a React application
+- Use URL parameters to navigate to specific pages in React
+- Review the React component lifecycle and use lifecycle methods to integrate
+  with API calls
+
+## You Do: Examine the Coindesk API (5 min / 0:10)
+
+Today we will be building a React app using the [Coindesk API](https://www.coindesk.com/api). Take a few minutes to familiarize yourself with the API. Next, we'll see how it fits into our codebase.
+
+## We Do: [React Bitcoin Prices](https://git.generalassemb.ly/dc-wdi-react-redux/react-bitcoin-prices) Setup (5 min / 0:15)
 
 Let's get set up with the react bitcoin price checker!
 
-## You Do: Examine Current Codebase (10 min / 0:20)
+## You Do: Examine Current Codebase (10 min / 0:25)
 
 Since we're starting off with a project that already has some scaffolding built
 out, we should spend some time getting our bearings.
@@ -49,9 +51,9 @@ following questions:
 4. Where is state located in our application? Is state being passed down to
    other components?
 5. Look at the Price component. What props is it expecting to be passed?
-<!-- 6. Where is our application getting data from? How is it accomplishing this? -->
+6. Where is our application getting data from? How is it accomplishing this?
 
-## We Do: React Router Setup (10 min / 0:30)
+## We Do: React Router Setup (10 min / 0:35)
 
 Currently, we are rendering just the App component, which renders the Home
 component. Let's bring in React Router and set it up to allow us to display
@@ -107,10 +109,7 @@ The three main ones we're going to use today are:
 ```jsx
 <Route />
 <Link />
-<Switch />
 ```
-
-Let's go ahead and import just route and link for now, we'll cover switch later.
 
 ```js
 // src/components/App/App.js
@@ -185,7 +184,7 @@ We're doing that because we just want to display it without any changes - we're
 not passing any props in, we're not modifying anything. The `component` property is only 
 used for static components.
 
-## You do: Add a Second Route and Link (10 min / 0:50)
+## You do: Add a Second Route and Link (10 min / 0:45)
 
 > 5 minute exercise / 5 minute review
 
@@ -233,7 +232,7 @@ currencies component and see what we need to do to make it work.
 This a good point to talk about React Router's
 [Route Props](https://reacttraining.com/react-router/web/api/Route/route-props).
 
-## We do: Currencies component (5 min / 0:55)
+## We do: Currencies component (5 min / 0:50)
 
 If we look at this component we see a long list of links. Note that the links
 are using regular `<a>` tags.
@@ -269,22 +268,26 @@ Great! Now go back to the page and click the link again, what happens?
 
 ![shia](https://media.giphy.com/media/ujUdrdpX7Ok5W/giphy.gif)
 
+## Parameters
+
+Every time we click on a currency, React Router changes the route for us. Do you notice the URL changing? How are we making these routes dynamic? We are using what we call **parameters**. Route parameters are named sections of our path. Simply put, they are placeholders (similar to variables or parameters) that capture values at their location in a URL.
+
 It changes the route for us (notice the URL changing) but we don't have any
 routes set up to match that. Let's do that next.
 
-## You do: Prices Component (10 min / 1:15)
-
-> 5 min exercise, 5 min review
+### We do: Price Component (10 min / 1:05)
 
 Back in `App.js`, we need to add another `<Route>` component. This time though,
-we want to include a parameter.
+we want to include a parameter, which will be signified in the `path` prop with a `:` followed by the name of the parameter.
 
 Look at the URL that we're on after clicking on a currency. Then look at the
 `Price` component. How might you write the `path` prop to make it work?
 
-> Hint: This part is just like defining a route with a param in express.
+```js
+<Route path="/price/:currency" component={price} />
+```
 
-## We do: Fix prices component (25 min / 1:40)
+## We do: Fix Price component (15 min / 1:20)
 
 We've added a route but not everything will work yet. HOW COME!?
 
@@ -337,69 +340,7 @@ spread operator for that.
 />
 ```
 
-### Spread explained
-
-The `...` syntax looks funny, so let's step aside and show you something that
-might be more familiar.
-
-Open up quokka or your favorite interactive javascript environment and follow
-along.
-
-Let's start with two objects with a few properties in them.
-
-```js
-let shed = {
-  color: "red",
-  spiders: true,
-  contains: ["lawnmower", "dirt", "flashlight"]
-};
-
-let house = {
-  doors: 3,
-  garage: true
-};
-```
-
-Using the spread operator we can unpack the values in shed and place them all
-into another object.
-
-Let's rewrite this a bit.
-
-```js
-let shed = {
-  color: "red",
-  spiders: true,
-  contains: ["lawnmower", "dirt", "flashlight"]
-};
-
-let house = {
-  doors: 3,
-  garage: true,
-  ...shed
-};
-
-console.log(house);
-//​ ​​​​{
-//   doors: 3,​​​​​
-//   garage: true,​​​​​
-//​​ ​​​  color: 'red',​​​​​
-//​ ​​​​  spiders: true,​​​​​
-//​ ​​​​  contains: [ 'lawnmower', 'dirt', 'flashlight' ]
-// }​​​​​
-```
-
-We can do the same thing with arrays.
-
-```js
-let contains = ["lawnmower", "dirt", "flashlight"];
-
-let items = ["banana", ...contains];
-
-console.log(items);
-// ['banana', 'lawnmower', 'dirt', 'flashlight']
-```
-
-Now let's apply this to the router!
+Let's take a closer look at what we are passing into the `Price` component using the spread operator.
 
 We know what our state object looks like, so we can use that as an example.
 
@@ -413,6 +354,12 @@ This turns into:
 
 ```js
 <Price price={this.state.price} />
+```
+
+We can simplify it even more like this:
+
+```js
+<Price {...this.state}>
 ```
 
 If we use the react dev tools, we can see what props have been passed down from
@@ -445,12 +392,6 @@ So if we spread the routerProps object, we'll get something like this:
 Putting it all together, using the spread operator turns this:
 
 ```jsx
-<Price setPrice={this.setPrice} {...routerProps} {...this.state} />
-```
-
-Into this:
-
-```jsx
 <Price
   setPrice={this.setPrice}
   history={ /* stuff in here */ }
@@ -460,6 +401,12 @@ Into this:
 />
 ```
 
+Into this:
+
+```jsx
+<Price setPrice={this.setPrice} {...routerProps} {...this.state} />
+```
+
 Super cool right?
 
 ![shia](https://media.giphy.com/media/ujUdrdpX7Ok5W/giphy.gif)
@@ -467,9 +414,9 @@ Super cool right?
 We still have some weird display quirks, and for that, we'll use `<Switch>` to
 fix them.
 
-## Using Switch (10 min / 1:50)
+## Using exact (5 min / 1:25)
 
-Switch works just like the switch/case statements in javascript. We're comparing
+`exact` works just like the switch/case statements in javascript. We're comparing
 string values (in this case, routes) and executing conditions (rendering
 components) based on what matches turn out true.
 
@@ -482,8 +429,7 @@ Currencies component. That's silly.
 
 > Why does this happen?
 
-There are two ways to handle this: using the Switch component, or specifying
-`exact` on routes.
+We can handle this by specifying `exact` on routes.
 
 Let's look at our routes in `App.js` again:
 
@@ -520,49 +466,11 @@ we would have to put `exact` on `/currencies` or else, any time we went to
 `/currencies/something` it would match both the root (`/currencies`) AND the
 `/currencies/something` routes and both would be rendered.
 
-We can avoid all this by just using `<Switch />`.
-
-Back in `App.js`, let's import the `<Switch />` component and then wrap all of
-our routes in it.
-
-```jsx
-import { Route, Link, Switch } from 'react-router-dom'
-
-render() {
-  return(
-    <div>
-      <nav>
-        <Link to="/">
-          <img src="https://en.bitcoin.it/w/images/en/2/29/BC_Logo_.png" alt=""/>
-          <h1>Bitcoin prices</h1>
-        </Link>
-        <Link to="/currencies">Currency List</Link>
-      </nav>
-      <main>
-        <Switch>
-          <Route path="/"
-            exact
-            component={Home}
-          />
-          <Route path="/currencies"
-            component={Currencies}
-          />
-          <Route
-            path="/price/:currency"
-            render={(routerProps) => <Price setPrice={this.setPrice} {...routerProps} {...this.state} /> }
-          />
-        </Switch>
-      </main>
-    </div>
-  )
-}
-```
-
 So easy!
 
 ![shia](https://media.giphy.com/media/ujUdrdpX7Ok5W/giphy.gif)
 
-## Redirects
+## Redirects (5 min / 1:30)
 
 Redirects using react router are incredibly easy. Redirect is just another
 component we can import and use by passing it a few props.
@@ -576,41 +484,3 @@ component we can import and use by passing it a few props.
 ```
 
 Redirect only requires a `to` prop which tells it what path to redirect to.
-
-## Wrapping Up (Remainder of Class)
-
-Here's a rough outline of how you should go about building react apps! Follow
-these suggestions, or don't, but they will probably help you a lot if you do them
-in order. I suggest reading through all of the steps before you start so you can 
-become familiar with the big picture of the entire process.
-
-1. Start a new app using `create-react-app`. Call it user-router or something similar, 
-it doesn't matter. You will be building four components (not including App.js). 
-Each one will render something different:
-
-| Component | Renders                                   | Route         |
-| --------- | ----------------------------------------- | ------------- |
-| Home      | "This is the homepage"                    | /             |
-| Greet     | A greeting from a url parameter passed in | /greet/:param |
-| Users     | A list of users                           | /users/       |
-| NewUser   | A form that lets you add a username       | /users/new    |
-
-1. Set up `react-router` like we did in this lesson, at the top level. What 
-is the top level of a React app?
-
-1. Build out each component with placeholders to render something. Do this first, before 
-starting to add state, props, or functionality.
-
-1. Set up your routes so that each route only displays the appropriate component.
-
-1. Plan out where you think your state should live. If you have to share state
-between multiple components, what's the best place to keep it? Think about what your 
-state needs to contain.
-
-1. Initialize your state and pass it down to the appropriate components.
-
-1. Wire up those components to be able to display and update the state as
-necessary. Add the functionality to have the greet component receive and display a
-parameter.
-
-1. Marvel at your creation and your progress after only 7 weeks of programming!
