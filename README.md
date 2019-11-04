@@ -189,8 +189,8 @@ used for static components.
 
 > 5 minute exercise / 5 minute review
 
-- Using the above instructions as a guide, add a new Link to `/currencies` and a
-  route to match it. What component do you think you want to render?
+Using the above instructions as a guide, add a new Link to `/currencies` and a 
+route to match it. What component do you think you want to render?
 
 <details>
   <summary>Solution</summary>
