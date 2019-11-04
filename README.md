@@ -31,13 +31,13 @@ URL. This way we don't have to reload the entire page to swap out some data.
 
 Let's get set up with the react bitcoin price checker!
 
-## You Do: Examine Current Codebase (15 min / 0:30)
+## You Do: Examine Current Codebase (10 min / 0:20)
 
 Since we're starting off with a project that already has some scaffolding built
 out, we should spend some time getting our bearings.
 
 Take 10 minutes and read through the code to familiarize yourself with the
-codebase with a partner or in groups of 3. Prepare to discuss your answers the
+codebase with the person sitting next to you. Prepare to discuss your answers the
 following questions:
 
 1. What dependencies is the application currently using? Where can I find
@@ -49,7 +49,7 @@ following questions:
 4. Where is state located in our application? Is state being passed down to
    other components?
 5. Look at the Price component. What props is it expecting to be passed?
-6. Where is our application getting data from? How is it accomplishing this?
+<!-- 6. Where is our application getting data from? How is it accomplishing this? -->
 
 ## We Do: React Router Setup (10 min / 0:40)
 
