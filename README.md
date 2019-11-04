@@ -104,7 +104,7 @@ necessary.
 Next, in `App.js`, we need to import all of the other components we want to use
 from React Router.
 
-The three main ones we're going to use today are:
+The two main ones we're going to use today are:
 
 ```jsx
 <Route />
