@@ -6,9 +6,9 @@
 
 - Use React Router's `BrowserRouter`, `Link`, `Route`, `Redirect`, and `Switch`
   components to add navigation to a React application
-- Review the React component lifecycle and use component methods to integrate
+- Use URL parameters to navigate to specific pages in React
+- Review the React component lifecycle and use lifecycle methods to integrate
   with API calls
-- Talk about SPAs
 
 ## Framing (5 min / 0:05)
 
@@ -16,19 +16,16 @@ Up to this point, our React applications have been limited in size, allowing us
 to use basic control flow in our components' render methods to determine what
 gets rendered to our users. However, as our React applications grow in size and
 scope, we need an easier and more robust way of rendering different components.
-Additionally, we will want the ability to set information in the url parameters
+Additionally, we will want the ability to set information in the URL parameters
 to make it easier for users to identify where they are in the application.
 
 React Router, while not the only, is the most commonly-used routing library for
 React. It is relatively straightforward to configure and integrates with the
 component architecture nicely (since it's just a collection of components).
 
-We will configure it as the root component in a React application. Then we'll
+We will configure it as the root component in a React application. Then, we'll
 tell it to render other components within itself depending on the path in the
-url. This way we don't have to reload the entire page to swap out some data.
-
-Don't confuse it with the express router! They do different things, though they
-both operate based on paths.
+URL. This way we don't have to reload the entire page to swap out some data.
 
 ## We Do: [React Bitcoin Prices](https://git.generalassemb.ly/dc-wdi-react-redux/react-bitcoin-prices) Setup (5 min / 0:10)
 
