@@ -272,8 +272,6 @@ Great! Now go back to the page and click the link again, what happens?
 It changes the route for us (notice the URL changing) but we don't have any
 routes set up to match that. Let's do that next.
 
-## Break (10 min / 1:05)
-
 ## You do: Prices Component (10 min / 1:15)
 
 > 5 min exercise, 5 min review
