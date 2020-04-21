@@ -129,14 +129,18 @@ render() {
     <div>
       <nav>
       // the link component produces an a element
-        <Link to=""></Link>
-        <Link to=""></Link>
+        <Link to="/home">my link text</Link>
+        <Link to="/about">my link text</Link>
       </nav>
       <main>
         // routes render the specified component we pass in
-        <Route path="" render={}/>
+        <Route path="/home">
+          <Home />
+        </Route>
         // we can give either a render or a component prop.
-        <Route path="" component={}/>
+        <Route path="/about">
+          <About />
+        </Route>      
       </main>
     </div>
   )
@@ -168,9 +172,9 @@ render() {
         </Link>
       </nav>
       <main>
-        <Route path="/"
-          component={Home}
-        />
+        <Route path="/">
+          <Home />
+        </Route>
       </main>
     </div>
   )
@@ -212,12 +216,12 @@ render() {
         <Link to="/currencies">Currency List</Link>
       </nav>
       <main>
-        <Route path="/"
-          component={Home}
-        />
-        <Route path="/currencies"
-          component={Currencies}
-        />
+        <Route path="/">
+          <Home />
+        </Route>
+        <Route path="/currencies">
+          <Currencies />
+        </Route>
       </main>
     </div>
   )
@@ -284,86 +288,21 @@ Look at the URL that we're on after clicking on a currency. Then look at the
 `Price` component. How might you write the `path` prop to make it work?
 
 ```js
-<Route path="/price/:currency" component={price} />
+<Route path="/price/:currency">
+  <Price />
+</Route>
 ```
 
 ## We do: Fix Price component (15 min / 1:20)
 
 We've added a route but not everything will work yet. HOW COME!?
 
-There are a couple things we need to fix.
-
-Firstly, we have to make sure we're using `render` instead of `component` in our
-route. That's because we're going to be passing some props into our component.
-
 ```jsx
-//...
-<Route path="/price/:currency" render={() => <Price />} />
-//...
-```
+<Route path="/price/:currency">
+  <Price setPrice={this.setPrice} price={this.state.price} />
+</Route>//...```
 
-Now we need to add a couple things to `<Price />`
-
-We've got a function in this (`App.js`) component called setPrice. let's pass
-that in.
-
-```jsx
-<Route
-  path="/price/:currency"
-  render={() => <Price setPrice={this.setPrice} />}
-/>
-```
-
-We also have to pass our URL parameter into `<Price />`. This is where the arrow
-function comes in to play.
-
-```jsx
-<Route
-  path="/price/:currency"
-  render={routerProps => <Price setPrice={this.setPrice} {...routerProps} />}
-/>
-```
-
-> The `...` (spread operator) is allowing us to "destructure" the props object
-> being passed by `Router` and apply each of its key/value pairs as props on the
-> `Price` component.
-
-Finally, we need to pass in the current component's state. We can also use the
-spread operator for that.
-
-```jsx
-<Route
-  path="/price/:currency"
-  render={routerProps => (
-    <Price setPrice={this.setPrice} {...routerProps} {...this.state} />
-  )}
-/>
-```
-
-Let's take a closer look at what we are passing into the `Price` component using the spread operator.
-
-We know what our state object looks like, so we can use that as an example.
-
-```js
-this.state = {
-  price: null
-};
-```
-
-This turns into:
-
-```js
-<Price price={this.state.price} />
-```
-
-We can simplify it even more like this:
-
-```js
-<Price {...this.state}>
-```
-
-If we use the react dev tools, we can see what props have been passed down from
-the `routerProps` object.
+We need to get information about the current path in our `Price` component. In that component, let's wrap our exported component in `withRouter` -- a function built into `react-router` that allows us to get more information about our routes. Let's check them out in our React Developer tools!
 
 ```js
 let routerProps = {
@@ -378,35 +317,6 @@ let routerProps = {
   }
 };
 ```
-
-So if we spread the routerProps object, we'll get something like this:
-
-```js
-<Price
-  history={ /* stuff in here */ }
-  location={ /* stuff in here */ }
-  match={ /* stuff in here */ }
->
-```
-
-Putting it all together, using the spread operator turns this:
-
-```jsx
-<Price
-  setPrice={this.setPrice}
-  history={ /* stuff in here */ }
-  location={ /* stuff in here */ }
-  match={ /* stuff in here */ }
-  price={this.state.price}
-/>
-```
-
-Into this:
-
-```jsx
-<Price setPrice={this.setPrice} {...routerProps} {...this.state} />
-```
-
 Super cool right?
 
 ![shia](https://media.giphy.com/media/ujUdrdpX7Ok5W/giphy.gif)
@@ -434,25 +344,26 @@ We can handle this by specifying `exact` on routes.
 Let's look at our routes in `App.js` again:
 
 ```jsx
-<Route path="/"
-  component={Home}
-/>
-<Route path="/currencies"
-  component={Currencies}
-/>
-<Route
-  path="/price/:currency"
-  render={(routerProps) => <Price setPrice={this.setPrice} {...routerProps} {...this.state} /> }
-/>
+<Route path="/">
+  <Home/>
+</Route>
+<Route path="/currencies">
+  <Currencies/>
+</Route>
+
+<Route path="/price/:currency">
+  <Price setPrice={this.setPrice} price={this.state.price} />
+</Route>
 ```
 
 Try putting `exact` on the `/` path route component.
 
 ```js
-<Route path="/" exact component={Home} />
-```
+<Route path="/" exact>
+  <Home/>
+</Route>```
 
-> Note: this is equivalent to putting `exact=true`
+> Note: this is equivalent to putting `exact={true}`
 
 Beautiful! this is a great solution, unless we have many different routes.
 
@@ -470,17 +381,13 @@ So easy!
 
 ![shia](https://media.giphy.com/media/ujUdrdpX7Ok5W/giphy.gif)
 
-## Redirects (5 min / 1:30)
+## Review Questions
 
-Redirects using react router are incredibly easy. Redirect is just another
-component we can import and use by passing it a few props.
+- Why do we use `react-router`? 
+- What does the `Route` component do?
+- What does the `Link` component do?
 
-- Import the `Redirect` component from `react-router-dom`
-- Add another route called `/currency`
-- Instead of rendering one of our components, put the `Redirect` component.
+## Hungry for More
 
-```js
-<Route path="/currency" render={() => <Redirect to="/currencies" />} />
-```
-
-Redirect only requires a `to` prop which tells it what path to redirect to.
+- [Props.children](https://codeburst.io/a-quick-intro-to-reacts-props-children-cb3d2fce4891)
+- [React Router documentation](https://reacttraining.com/react-router/web)
