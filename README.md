@@ -19,7 +19,7 @@ URL. This way we don't have to reload the entire page to swap out some data.
 
 ## Learning Objectives
 
-- Use React Router's `BrowserRouter`, `Link`, `Route`, `exact` and `Redirect`
+- Use React Router's `BrowserRouter`, `Link`, `Route`, `exact` and `useRouter`
   components to add navigation to a React application
 - Use URL parameters to navigate to specific pages in React
 - Review the React component lifecycle and use lifecycle methods to integrate
