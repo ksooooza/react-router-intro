@@ -302,27 +302,7 @@ We've added a route but not everything will work yet. HOW COME!?
   <Price setPrice={this.setPrice} price={this.state.price} />
 </Route>//...```
 
-We need to get information about the current path in our `Price` component. In that component, let's wrap our exported component in `withRouter` -- a function built into `react-router` that allows us to get more information about our routes. Let's check them out in our React Developer tools!
-
-```js
-let routerProps = {
-  history: {
-    /* stuff in here */
-  },
-  location: {
-    /* stuff in here */
-  },
-  match: {
-    /* stuff in here */
-  }
-};
-```
-Super cool right?
-
-![shia](https://media.giphy.com/media/ujUdrdpX7Ok5W/giphy.gif)
-
-We still have some weird display quirks, and for that, we'll use `<Switch>` to
-fix them.
+We can use the [`useParams`](https://reactrouter.com/web/api/Hooks/useparams) hook to gain access to the url parameters within our component.
 
 ## Using exact (5 min / 1:25)
 
