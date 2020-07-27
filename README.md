@@ -300,7 +300,8 @@ We've added a route but not everything will work yet. HOW COME!?
 ```jsx
 <Route path="/price/:currency">
   <Price setPrice={this.setPrice} price={this.state.price} />
-</Route>//...```
+</Route>//...
+```
 
 We can use the [`useParams`](https://reactrouter.com/web/api/Hooks/useparams) hook to gain access to the url parameters within our component.
 
