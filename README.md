@@ -341,7 +341,8 @@ Try putting `exact` on the `/` path route component.
 ```js
 <Route path="/" exact>
   <Home/>
-</Route>```
+</Route>
+```
 
 > Note: this is equivalent to putting `exact={true}`
 
