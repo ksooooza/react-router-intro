@@ -19,7 +19,7 @@ URL. This way we don't have to reload the entire page to swap out some data.
 
 ## Learning Objectives
 
-- Use React Router's `BrowserRouter`, `Link`, `Route`, `exact` and `useRouter`
+- Use React Router's `BrowserRouter`, `Link`, `Route`, `exact` and `useParams`
   components to add navigation to a React application
 - Use URL parameters to navigate to specific pages in React
 - Review the React component lifecycle and use lifecycle methods to integrate
@@ -29,7 +29,7 @@ URL. This way we don't have to reload the entire page to swap out some data.
 
 Today we will be building a React app using the [Coindesk API](https://www.coindesk.com/api). Take a few minutes to familiarize yourself with the API. Next, we'll see how it fits into our codebase.
 
-## We Do: [React Bitcoin Prices](https://git.generalassemb.ly/dc-wdi-react-redux/react-bitcoin-prices) Setup (5 min / 0:15)
+## We Do: [React Bitcoin Prices](https://git.generalassemb.ly/aspittel/hooks-react-router) Setup (5 min / 0:15)
 
 Let's get set up with the react bitcoin price checker!
 
@@ -300,29 +300,10 @@ We've added a route but not everything will work yet. HOW COME!?
 ```jsx
 <Route path="/price/:currency">
   <Price setPrice={this.setPrice} price={this.state.price} />
-</Route>//...```
-
-We need to get information about the current path in our `Price` component. In that component, let's wrap our exported component in `withRouter` -- a function built into `react-router` that allows us to get more information about our routes. Let's check them out in our React Developer tools!
-
-```js
-let routerProps = {
-  history: {
-    /* stuff in here */
-  },
-  location: {
-    /* stuff in here */
-  },
-  match: {
-    /* stuff in here */
-  }
-};
+</Route>//...
 ```
-Super cool right?
 
-![shia](https://media.giphy.com/media/ujUdrdpX7Ok5W/giphy.gif)
-
-We still have some weird display quirks, and for that, we'll use `<Switch>` to
-fix them.
+We can use the [`useParams`](https://reactrouter.com/web/api/Hooks/useparams) hook to gain access to the url parameters within our component.
 
 ## Using exact (5 min / 1:25)
 
@@ -361,7 +342,8 @@ Try putting `exact` on the `/` path route component.
 ```js
 <Route path="/" exact>
   <Home/>
-</Route>```
+</Route>
+```
 
 > Note: this is equivalent to putting `exact={true}`
 
