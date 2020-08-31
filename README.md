@@ -118,7 +118,7 @@ import { Route, Link } from "react-router-dom";
 ```
 
 Now that we have access to these components, we need to modify the `App`
-component's `render()` method to set up navigation. The basic structure we will
+component's `return` to set up navigation. The basic structure we will
 use is this:
 
 ```jsx
@@ -151,29 +151,27 @@ return (
 > `render`, `component` or `children`) based on the current url (`path`) we're at. `path`
 > should probably match a `<Link to="">` defined somewhere.
 
-Now let's modify the render method in `App.js` to include our Link and Route
+Now let's modify the return in `App.js` to include our Link and Route
 components.
 
 ```jsx
 // src/App.js
 
-render() {
-  return(
-    <div>
-      <nav>
-        <Link to="/">
-          <img src="https://en.bitcoin.it/w/images/en/2/29/BC_Logo_.png" alt=""/>
-          <h1>Bitcoin prices</h1>
-        </Link>
-      </nav>
-      <main>
-        <Route path="/">
-          <Home />
-        </Route>
-      </main>
-    </div>
-  )
-}
+return (
+  <div>
+    <nav>
+      <Link to="/">
+        <img src="https://en.bitcoin.it/w/images/en/2/29/BC_Logo_.png" alt=""/>
+        <h1>Bitcoin prices</h1>
+      </Link>
+    </nav>
+    <main>
+      <Route path="/">
+        <Home />
+      </Route>
+    </main>
+  </div>
+)
 ```
 
 Great! But this doesn't do anything because we're already on the homepage.
@@ -240,20 +238,19 @@ Go ahead and replace the `a` tag with a `<Link>` component. Make the `to` prop
 value equal to the `href` value.
 
 ```jsx
-// src/Components/Currencies/Currencies.js
-import { Link } from 'react-router-dom'
+import React from 'react'
+import currencies from "./currencies.json"
 
-//...
-  let list = listOfCurrencies.map(item => {
-    return (
-      <div className="currency" key={item.currency}>
-        <p><Link to={"/price/"+ item.currency}>{item.currency}</Link>: {item.country}</p>
-      </div>
-    )
-  })
+import { Link } from "react-router-dom"
+
+export default function Currencies() {
+  return (
+    <div>
+      {currencies.map(currency => <h2><Link to={`/price/${currency.currency}`}>{currency.currency}</Link>: {currency.country}</h2>)}
+    </div>
+  )
 }
 
-  // ...
 ```
 
 Great! Now go back to the page and click the link again, what happens?
@@ -317,10 +314,10 @@ Let's look at our routes in `App.js` again:
 
 ```jsx
 <Route path="/">
-  <Home/>
+  <Home />
 </Route>
 <Route path="/currencies">
-  <Currencies/>
+  <Currencies />
 </Route>
 
 <Route path="/price/:currency">
