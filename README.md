@@ -20,16 +20,16 @@ URL. This way we don't have to reload the entire page to swap out some data.
 ## Learning Objectives
 
 - Use React Router's `BrowserRouter`, `Link`, `Route`, `exact` and `useParams`
-  components to add navigation to a React application
-- Use URL parameters to navigate to specific pages in React
+  components to add navigation to a React application.
+- Use URL parameters to navigate to specific pages in React.
 - Review the React component lifecycle and use lifecycle methods to integrate
-  with API calls
+  with API calls.
 
 ## You Do: Examine the Coindesk API (5 min / 0:10)
 
 Today we will be building a React app using the [Coindesk API](https://www.coindesk.com/api). Take a few minutes to familiarize yourself with the API. Next, we'll see how it fits into our codebase.
 
-## We Do: [React Bitcoin Prices](https://git.generalassemb.ly/aspittel/hooks-react-router) Setup (5 min / 0:15)
+## We Do: [React Bitcoin Prices](https://git.generalassemb.ly/sei-nyc-dragonflies/hooks-react-router) Setup (5 min / 0:15)
 
 Let's get set up with the react bitcoin price checker!
 
@@ -112,39 +112,34 @@ The two main ones we're going to use today are:
 ```
 
 ```js
-// src/components/App/App.js
+// src/components/App.js
 
 import { Route, Link } from "react-router-dom";
 ```
 
 Now that we have access to these components, we need to modify the `App`
-component's `render()` method to set up navigation. The basic structure we will
+component's `return` to set up navigation. The basic structure we will
 use is this:
 
 ```jsx
-// src/components/App/App.js
+// src/components/App.js
 
-render() {
-  return (
-    <div>
-      <nav>
-      // the link component produces an a element
-        <Link to="/home">my link text</Link>
-        <Link to="/about">my link text</Link>
-      </nav>
-      <main>
-        // routes render the specified component we pass in
-        <Route path="/home">
-          <Home />
-        </Route>
-        // we can give either a render or a component prop.
-        <Route path="/about">
-          <About />
-        </Route>      
-      </main>
-    </div>
-  )
-}
+return (
+  <div>
+    <nav>
+    // the link component produces an a element
+      <Link to="/home">my link text</Link>
+      <Link to="/about">my link text</Link>
+    </nav>
+    <main>
+      // routes render the specified component we pass in
+      <Route path="/home">
+        <Home />
+      </Route>
+      // we can give either a render or a component prop, or render the element as a child     
+    </main>
+  </div>
+)
 ```
 
 > **Link** - a component for setting the URL and providing navigation between
@@ -153,40 +148,37 @@ render() {
 > can also be used inside of any component that is connected to a `Route`.
 
 > **Route** - a component that renders a specified component (using either
-> `render` or `component`) based on the current url (`path`) we're at. `path`
+> `render`, `component` or `children`) based on the current url (`path`) we're at. `path`
 > should probably match a `<Link to="">` defined somewhere.
 
-Now let's modify the render method in `App.js` to include our Link and Route
+Now let's modify the return in `App.js` to include our Link and Route
 components.
 
 ```jsx
-// src/components/App/App.js
+// src/App.js
 
-render() {
-  return(
-    <div>
-      <nav>
-        <Link to="/">
-          <img src="https://en.bitcoin.it/w/images/en/2/29/BC_Logo_.png" alt=""/>
-          <h1>Bitcoin prices</h1>
-        </Link>
-      </nav>
-      <main>
-        <Route path="/">
-          <Home />
-        </Route>
-      </main>
-    </div>
-  )
-}
+return (
+  <div>
+    <nav>
+      <Link to="/">
+        <img src="https://en.bitcoin.it/w/images/en/2/29/BC_Logo_.png" alt=""/>
+        <h1>Bitcoin prices</h1>
+      </Link>
+    </nav>
+    <main>
+      <Route path="/">
+        <Home />
+      </Route>
+    </main>
+  </div>
+)
 ```
 
 Great! But this doesn't do anything because we're already on the homepage.
 
-Also, note that we used `component` in this case to display our home component.
-We're doing that because we just want to display it without any changes - we're
-not passing any props in, we're not modifying anything. The `component` property is only 
-used for static components.
+Also, note that we used `children` in this case to display our home component.
+We're doing that because we don't need to pass it any props from our router, and we're
+not passing any props in, we're not modifying anything.
 
 ## You do: Add a Second Route and Link (10 min / 0:45)
 
@@ -199,33 +191,31 @@ route to match it. What component do you think you want to render?
   <summary>Solution</summary>
 
 ```jsx
-// src/Components/App/App.js
+// src/App.js
 //...
-import Currencies from '../Currencies/Currencies'
+import Currencies from './Currencies'
 
 // ...
 
-render() {
-  return(
-    <div>
-      <nav>
-        <Link to="/">
-          <img src="https://en.bitcoin.it/w/images/en/2/29/BC_Logo_.png" alt=""/>
-          <h1>Bitcoin prices</h1>
-        </Link>
-        <Link to="/currencies">Currency List</Link>
-      </nav>
-      <main>
-        <Route path="/">
-          <Home />
-        </Route>
-        <Route path="/currencies">
-          <Currencies />
-        </Route>
-      </main>
-    </div>
-  )
-}
+return(
+  <div>
+    <nav>
+      <Link to="/">
+        <img src="https://en.bitcoin.it/w/images/en/2/29/BC_Logo_.png" alt=""/>
+        <h1>Bitcoin prices</h1>
+      </Link>
+      <Link to="/currencies">Currency List</Link>
+    </nav>
+    <main>
+      <Route path="/">
+        <Home /> 
+      </Route>
+      <Route path="/currencies">
+        <Currencies />
+      </Route>
+    </main>
+  </div>
+)
 ```
 
 </details>
@@ -248,22 +238,19 @@ Go ahead and replace the `a` tag with a `<Link>` component. Make the `to` prop
 value equal to the `href` value.
 
 ```jsx
-// src/Components/Currencies/Currencies.js
-import { Link } from 'react-router-dom'
+import React from 'react'
+import currencies from "./currencies.json"
 
-//...
+import { Link } from "react-router-dom"
 
-  render() {
-    let list = listOfCurrencies.map(item => {
-      return (
-        <div className="currency" key={item.currency}>
-          <p><Link to={"/price/"+ item.currency}>{item.currency}</Link>: {item.country}</p>
-        </div>
-      )
-    })
-  }
+export default function Currencies() {
+  return (
+    <div>
+      {currencies.map(currency => <h2><Link to={`/price/${currency.currency}`}>{currency.currency}</Link>: {currency.country}</h2>)}
+    </div>
+  )
+}
 
-  // ...
 ```
 
 Great! Now go back to the page and click the link again, what happens?
@@ -299,8 +286,9 @@ We've added a route but not everything will work yet. HOW COME!?
 
 ```jsx
 <Route path="/price/:currency">
-  <Price setPrice={this.setPrice} price={this.state.price} />
-</Route>//...
+  <Price />
+</Route>
+//...
 ```
 
 We can use the [`useParams`](https://reactrouter.com/web/api/Hooks/useparams) hook to gain access to the url parameters within our component.
@@ -326,14 +314,14 @@ Let's look at our routes in `App.js` again:
 
 ```jsx
 <Route path="/">
-  <Home/>
+  <Home />
 </Route>
 <Route path="/currencies">
-  <Currencies/>
+  <Currencies />
 </Route>
 
 <Route path="/price/:currency">
-  <Price setPrice={this.setPrice} price={this.state.price} />
+  <Price />
 </Route>
 ```
 
