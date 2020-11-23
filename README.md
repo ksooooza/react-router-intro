@@ -65,12 +65,12 @@ handy!
 
 ### Importing Dependencies
 
-First, we need to install `react-router` and `react-router-dom` as dependencies
+First, we need to install `react-router-dom` as a dependency
 in `package.json`. Running `npm install` with arguments should automatically do
 this for us.
 
 ```sh
-npm install react-router react-router-dom
+npm install react-router-dom
 ```
 
 To configure our current application to use React Router, we need to modify the
