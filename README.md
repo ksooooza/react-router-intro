@@ -29,7 +29,7 @@ URL. This way we don't have to reload the entire page to swap out some data.
 
 Today we will be building a React app using the [Coindesk API](https://www.coindesk.com/api). Take a few minutes to familiarize yourself with the API. Next, we'll see how it fits into our codebase.
 
-## We Do: [React Bitcoin Prices](https://git.generalassemb.ly/sei-nyc-dragonflies/hooks-react-router) Setup (5 min / 0:15)
+## We Do: [React Bitcoin Prices](https://git.generalassemb.ly/sei-nyc-garnet/hooks-react-router) Setup (5 min / 0:15)
 
 Let's get set up with the react bitcoin price checker!
 
@@ -65,12 +65,12 @@ handy!
 
 ### Importing Dependencies
 
-First, we need to install `react-router` and `react-router-dom` as dependencies
+First, we need to install `react-router-dom` as a dependency
 in `package.json`. Running `npm install` with arguments should automatically do
 this for us.
 
 ```sh
-npm install react-router react-router-dom
+npm install react-router-dom
 ```
 
 To configure our current application to use React Router, we need to modify the
