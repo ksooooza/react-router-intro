@@ -11,7 +11,7 @@ to make it easier for users to identify where they are in the application.
 
 React Router, while not the only, is the most commonly-used routing library for
 React. It is relatively straightforward to configure and integrates with the
-component architecture nicely (since it's just a collection of components).
+component architecture nicely (since it's also a collection of components).
 
 We will configure it as the root component in a React application. Then, we'll
 tell it to render other components within itself depending on the path in the
@@ -25,22 +25,21 @@ URL. This way we don't have to reload the entire page to swap out some data.
 - Review the React component lifecycle and use lifecycle methods to integrate
   with API calls.
 
-## You Do: Examine the Coindesk API (5 min / 0:10)
+## We Do: Examine the Coindesk API
 
-Today we will be building a React app using the [Coindesk API](https://www.coindesk.com/api). Take a few minutes to familiarize yourself with the API. Next, we'll see how it fits into our codebase.
+Today we will be building a React app using the
+[Coindesk API](https://www.coindesk.com/api). Let's take a few minutes to
+familiarize yourself with the API. Next, we'll see how it fits into our
+codebase.
 
-## We Do: [React Bitcoin Prices](https://git.generalassemb.ly/sei-nyc-garnet/hooks-react-router) Setup (5 min / 0:15)
-
-Let's get set up with the react bitcoin price checker!
-
-## You Do: Examine Current Codebase (10 min / 0:25)
+## You Do: Examine Current Codebase
 
 Since we're starting off with a project that already has some scaffolding built
 out, we should spend some time getting our bearings.
 
 Take 10 minutes and read through the code to familiarize yourself with the
-codebase with the person sitting next to you. Prepare to discuss your answers the
-following questions:
+codebase with a partner. Prepare to discuss your answers the following
+questions:
 
 1. What dependencies is the application currently using? Where can I find
    information on them?
@@ -53,9 +52,9 @@ following questions:
 5. Look at the Price component. What props is it expecting to be passed?
 6. Where is our application getting data from? How is it accomplishing this?
 
-## We Do: React Router Setup (10 min / 0:35)
+## React Router Setup
 
-Currently, we are rendering just the App component, which renders the Home
+Currently, we are only rendering the App component, which renders the Home
 component. Let's bring in React Router and set it up to allow us to display
 multiple components.
 
@@ -65,9 +64,8 @@ handy!
 
 ### Importing Dependencies
 
-First, we need to install `react-router-dom` as a dependency
-in `package.json`. Running `npm install` with arguments should automatically do
-this for us.
+First, we need to install `react-router-dom` as a dependency in `package.json`.
+Running `npm install` with arguments should automatically do this for us.
 
 ```sh
 npm install react-router-dom
@@ -80,7 +78,7 @@ in turn, render `App` through which all the rest of our components will be
 rendered:
 
 ```jsx
-// index.js
+// src/index.js
 import { BrowserRouter as Router } from "react-router-dom";
 
 //...
@@ -104,42 +102,12 @@ necessary.
 Next, in `App.js`, we need to import all of the other components we want to use
 from React Router.
 
-The two main ones we're going to use today are:
-
-```jsx
-<Route />
-<Link />
-```
+The two main ones we're going to use today are `Link` and `Route`.
 
 ```js
-// src/components/App.js
+// src/App.js
 
-import { Route, Link } from "react-router-dom";
-```
-
-Now that we have access to these components, we need to modify the `App`
-component's `return` to set up navigation. The basic structure we will
-use is this:
-
-```jsx
-// src/components/App.js
-
-return (
-  <div>
-    <nav>
-    // the link component produces an a element
-      <Link to="/home">my link text</Link>
-      <Link to="/about">my link text</Link>
-    </nav>
-    <main>
-      // routes render the specified component we pass in
-      <Route path="/home">
-        <Home />
-      </Route>
-      // we can give either a render or a component prop, or render the element as a child     
-    </main>
-  </div>
-)
+import { Link, Route } from "react-router-dom";
 ```
 
 > **Link** - a component for setting the URL and providing navigation between
@@ -148,8 +116,8 @@ return (
 > can also be used inside of any component that is connected to a `Route`.
 
 > **Route** - a component that renders a specified component (using either
-> `render`, `component` or `children`) based on the current url (`path`) we're at. `path`
-> should probably match a `<Link to="">` defined somewhere.
+> `render`, `component` or `children`) based on the current url (`path`) we're
+> at. `path` should probably match a `<Link to="">` defined somewhere.
 
 Now let's modify the return in `App.js` to include our Link and Route
 components.
@@ -160,10 +128,8 @@ components.
 return (
   <div>
     <nav>
-      <Link to="/">
-        <img src="https://en.bitcoin.it/w/images/en/2/29/BC_Logo_.png" alt=""/>
-        <h1>Bitcoin prices</h1>
-      </Link>
+      <Link to="/">Home</Link>
+      <a href="/currencies">Currencies</a>
     </nav>
     <main>
       <Route path="/">
@@ -171,20 +137,20 @@ return (
       </Route>
     </main>
   </div>
-)
+);
 ```
 
 Great! But this doesn't do anything because we're already on the homepage.
 
 Also, note that we used `children` in this case to display our home component.
-We're doing that because we don't need to pass it any props from our router, and we're
-not passing any props in, we're not modifying anything.
+We're doing that because we don't need to pass it any props from our router, and
+we're not passing any props in, we're not modifying anything.
 
-## You do: Add a Second Route and Link (10 min / 0:45)
+## You Do: Add a Second Route and Link
 
 > 5 minute exercise / 5 minute review
 
-Using the above instructions as a guide, add a new Link to `/currencies` and a 
+Using the above instructions as a guide, add a new Link to `/currencies` and a
 route to match it. What component do you think you want to render?
 
 <details>
@@ -193,118 +159,44 @@ route to match it. What component do you think you want to render?
 ```jsx
 // src/App.js
 //...
-import Currencies from './Currencies'
+import Currencies from "./Currencies";
 
 // ...
 
-return(
+return (
   <div>
     <nav>
-      <Link to="/">
-        <img src="https://en.bitcoin.it/w/images/en/2/29/BC_Logo_.png" alt=""/>
-        <h1>Bitcoin prices</h1>
-      </Link>
-      <Link to="/currencies">Currency List</Link>
+      <Link to="/">Home</Link>
+      <Link to="/currencies">Currencies</Link>
     </nav>
     <main>
       <Route path="/">
-        <Home /> 
+        <Home />
       </Route>
       <Route path="/currencies">
         <Currencies />
       </Route>
     </main>
   </div>
-)
+);
 ```
 
 </details>
 
-Now we've got two components and two routes. Perfect. Let's take a look at our
-currencies component and see what we need to do to make it work.
+Now we've got two components and two routes. Perfect...almost. 
 
-This a good point to talk about React Router's
-[Route Props](https://reacttraining.com/react-router/web/api/Route/route-props).
+## Using exact
 
-## We do: Currencies component (5 min / 0:50)
-
-If we look at this component we see a long list of links. Note that the links
-are using regular `<a>` tags.
-
-What happens if we click on a link? It works, but the whole page reloads! Gross.
-Let's fix that.
-
-Go ahead and replace the `a` tag with a `<Link>` component. Make the `to` prop
-value equal to the `href` value.
-
-```jsx
-import React from 'react'
-import currencies from "./currencies.json"
-
-import { Link } from "react-router-dom"
-
-export default function Currencies() {
-  return (
-    <div>
-      {currencies.map(currency => <h2><Link to={`/price/${currency.currency}`}>{currency.currency}</Link>: {currency.country}</h2>)}
-    </div>
-  )
-}
-
-```
-
-Great! Now go back to the page and click the link again, what happens?
-
-**MAGIC!**
-
-![shia](https://media.giphy.com/media/ujUdrdpX7Ok5W/giphy.gif)
-
-## Parameters
-
-Every time we click on a currency, React Router changes the route for us. Do you notice the URL changing? How are we making these routes dynamic? We are using what we call **parameters**. Route parameters are named sections of our path. Simply put, they are placeholders (similar to variables or parameters) that capture values at their location in a URL.
-
-It changes the route for us (notice the URL changing) but we don't have any
-routes set up to match that. Let's do that next.
-
-### We do: Price Component (10 min / 1:05)
-
-Back in `App.js`, we need to add another `<Route>` component. This time though,
-we want to include a parameter, which will be signified in the `path` prop with a `:` followed by the name of the parameter.
-
-Look at the URL that we're on after clicking on a currency. Then look at the
-`Price` component. How might you write the `path` prop to make it work?
-
-```js
-<Route path="/price/:currency">
-  <Price />
-</Route>
-```
-
-## We do: Fix Price component (15 min / 1:20)
-
-We've added a route but not everything will work yet. HOW COME!?
-
-```jsx
-<Route path="/price/:currency">
-  <Price />
-</Route>
-//...
-```
-
-We can use the [`useParams`](https://reactrouter.com/web/api/Hooks/useparams) hook to gain access to the url parameters within our component.
-
-## Using exact (5 min / 1:25)
-
-`exact` works just like the switch/case statements in javascript. We're comparing
-string values (in this case, routes) and executing conditions (rendering
-components) based on what matches turn out true.
+`exact` works like the switch/case statements in JavaScript. We're
+comparing string values (in this case, routes) and executing conditions
+(rendering components) based on what matches turn out true.
 
 Since we're not using switch right now, we'll see something like this:
 
 ![preswitch](./images/pre-switch.png)
 
 There are two components stacked on top of each other! The Home and the
-Currencies component. That's silly.
+Currencies Component. That's silly.
 
 > Why does this happen?
 
@@ -319,17 +211,13 @@ Let's look at our routes in `App.js` again:
 <Route path="/currencies">
   <Currencies />
 </Route>
-
-<Route path="/price/:currency">
-  <Price />
-</Route>
 ```
 
 Try putting `exact` on the `/` path route component.
 
 ```js
 <Route path="/" exact>
-  <Home/>
+  <Home />
 </Route>
 ```
 
@@ -349,11 +237,73 @@ we would have to put `exact` on `/currencies` or else, any time we went to
 
 So easy!
 
-![shia](https://media.giphy.com/media/ujUdrdpX7Ok5W/giphy.gif)
+## Currencies Component
+
+If we look at this component we see a long list of links. Note that the links
+are using regular `<a>` tags.
+
+What happens if we click on a link? It works, but the whole page reloads! Let's
+fix that.
+
+Go ahead and replace the `a` tag with a `<Link>` component. Make the `to` prop
+value equal to the `href` value.
+
+```jsx
+import { Link } from "react-router-dom";
+import currencies from "./currencies.json";
+
+function Currencies() {
+  return (
+    <div>
+      {currencies.map((currency) => (
+        <h2>
+          <Link to={`/price/${currency.currency}`}>{currency.currency}</Link>:{" "}
+          {currency.country}
+        </h2>
+      ))}
+    </div>
+  );
+}
+
+export default Currencies;
+```
+
+Great! Now go back to the page and click the link again, what happens?
+
+**MAGIC!**
+
+## Parameters
+
+Every time we click on a currency, React Router changes the route for us. Do you
+notice the URL changing? How are we making these routes dynamic? We are using
+what we call **parameters**. Route parameters are named sections of our path; they are placeholders (similar to variables or parameters) that
+capture values at their location in a URL.
+
+It changes the route for us (notice the URL changing) but we don't have any
+routes set up to match that. Let's do that next.
+
+### Add Price Component
+
+Back in `App.js`, we need to add another `<Route>` component. This time though,
+we want to include a parameter, which will be signified in the `path` prop with
+a `:` followed by the name of the parameter.
+
+Look at the URL that we're on after clicking on a currency. Then look at the
+`Price` component. How might you write the `path` prop to make it work?
+
+```js
+<Route path="/price/:currency">
+  <Price />
+</Route>
+```
+
+We've added a route but not everything will work yet. HOW COME!?
+
+It seems that something called `params` is undefined. We can use the [`useParams`](https://reactrouter.com/web/api/Hooks/useparams) hook to gain access to the url parameters within our component.
 
 ## Review Questions
 
-- Why do we use `react-router`? 
+- Why do we use `react-router-dom`?
 - What does the `Route` component do?
 - What does the `Link` component do?
 
