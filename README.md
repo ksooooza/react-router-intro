@@ -159,7 +159,7 @@ route to match it. What component do you think you want to render?
 ```jsx
 // src/App.js
 //...
-import Currencies from "./Currencies";
+import Currencies from "./Currencies.jsx";
 
 // ...
 
