@@ -19,7 +19,7 @@ URL. This way we don't have to reload the entire page to swap out some data.
 
 ## Learning Objectives
 
-- Use React Router's `BrowserRouter`, `Link`, `Route`, `exact` and `useParams`
+- Use React Router's `BrowserRouter`, `Link`, `Routes`, `Route` and `useParams`
   components to add navigation to a React application.
 - Use URL parameters to navigate to specific pages in React.
 - Review the React component lifecycle and use lifecycle methods to integrate
@@ -59,7 +59,7 @@ component. Let's bring in React Router and set it up to allow us to display
 multiple components.
 
 When working with a new library, it's useful to have
-[the documentation](https://reacttraining.com/react-router/web/guides/quick-start)
+[the documentation](https://reactrouter.com/docs/en/v6)
 handy!
 
 ### Importing Dependencies
@@ -107,7 +107,7 @@ The two main ones we're going to use today are `Link` and `Route`.
 ```js
 // src/App.js
 
-import { Link, Route } from "react-router-dom";
+import { Link, Routes ,Route } from "react-router-dom";
 ```
 
 > **Link** - a component for setting the URL and providing navigation between
@@ -115,8 +115,9 @@ import { Link, Route } from "react-router-dom";
 > `to` property, which sets the URL to whatever path is defined within it. Link
 > can also be used inside of any component that is connected to a `Route`.
 
-> **Route** - a component that renders a specified component (using either
-> `render`, `component` or `children`) based on the current url (`path`) we're
+> **Routes** - a component that we will write all of our routes in.
+
+> **Route** - a component that renders a specified component (using `element`) based on the current url (`path`) we're
 > at. `path` should probably match a `<Link to="">` defined somewhere.
 
 Now let's modify the return in `App.js` to include our Link and Route
@@ -132,9 +133,9 @@ return (
       <a href="/currencies">Currencies</a>
     </nav>
     <main>
-      <Route path="/">
-        <Home />
-      </Route>
+    <Routes>
+      <Route path="/" element={<Home />}>
+    </Routes>
     </main>
   </div>
 );
@@ -170,12 +171,8 @@ return (
       <Link to="/currencies">Currencies</Link>
     </nav>
     <main>
-      <Route path="/">
-        <Home />
-      </Route>
-      <Route path="/currencies">
-        <Currencies />
-      </Route>
+      <Route path="/" element={<Home />}/>
+      <Route path="/currencies" element={<Currencies />} />
     </main>
   </div>
 );
@@ -183,59 +180,7 @@ return (
 
 </details>
 
-Now we've got two components and two routes. Perfect...almost. 
-
-## Using exact
-
-`exact` works like the switch/case statements in JavaScript. We're
-comparing string values (in this case, routes) and executing conditions
-(rendering components) based on what matches turn out true.
-
-Since we're not using switch right now, we'll see something like this:
-
-![preswitch](./images/pre-switch.png)
-
-There are two components stacked on top of each other! The Home and the
-Currencies Component. That's silly.
-
-> Why does this happen?
-
-We can handle this by specifying `exact` on routes.
-
-Let's look at our routes in `App.js` again:
-
-```jsx
-<Route path="/">
-  <Home />
-</Route>
-<Route path="/currencies">
-  <Currencies />
-</Route>
-```
-
-Try putting `exact` on the `/` path route component.
-
-```js
-<Route path="/" exact>
-  <Home />
-</Route>
-```
-
-> Note: this is equivalent to putting `exact={true}`
-
-Beautiful! this is a great solution, unless we have many different routes.
-
-If we had a list of routes like:
-
-- `/currencies`
-- `/currencies/new`
-- `/currencies/:id` etc
-
-we would have to put `exact` on `/currencies` or else, any time we went to
-`/currencies/something` it would match both the root (`/currencies`) AND the
-`/currencies/something` routes and both would be rendered.
-
-So easy!
+Now we've got two components and two routes.
 
 ## Currencies Component
 
@@ -292,9 +237,7 @@ Look at the URL that we're on after clicking on a currency. Then look at the
 `Price` component. How might you write the `path` prop to make it work?
 
 ```js
-<Route path="/price/:currency">
-  <Price />
-</Route>
+<Route path="/price/:currency" element={<Price />}
 ```
 
 We've added a route but not everything will work yet. HOW COME!?
