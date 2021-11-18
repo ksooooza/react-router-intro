@@ -107,7 +107,7 @@ The two main ones we're going to use today are `Link` and `Route`.
 ```js
 // src/App.js
 
-import { Link, Routes ,Route } from "react-router-dom";
+import { Link, Routes, Route } from "react-router-dom";
 ```
 
 > **Link** - a component for setting the URL and providing navigation between
@@ -134,7 +134,7 @@ return (
     </nav>
     <main>
     <Routes>
-      <Route path="/" element={<Home />}>
+      <Route path="/" element={<Home />} />
     </Routes>
     </main>
   </div>
@@ -171,7 +171,7 @@ return (
       <Link to="/currencies">Currencies</Link>
     </nav>
     <main>
-      <Route path="/" element={<Home />}/>
+      <Route path="/" element={<Home />} />
       <Route path="/currencies" element={<Currencies />} />
     </main>
   </div>
