@@ -143,10 +143,6 @@ return (
 
 Great! But this doesn't do anything because we're already on the homepage.
 
-Also, note that we used `children` in this case to display our home component.
-We're doing that because we don't need to pass it any props from our router, and
-we're not passing any props in, we're not modifying anything.
-
 ## You Do: Add a Second Route and Link
 
 > 5 minute exercise / 5 minute review
